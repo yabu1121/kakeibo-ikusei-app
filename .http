@@ -1,0 +1,22 @@
+@baseUrl=http://localhost:8080
+
+###
+GET {{baseUrl}}
+
+### 
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "amount": 800
+}
+
+### 
+GET {{baseUrl}}/expense
+
+### 
+GET {{baseUrl}}/character
+
+###
+
+POST {{baseUrl}}/character/login
