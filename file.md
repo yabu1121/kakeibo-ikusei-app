@@ -1,6 +1,7 @@
 .
 ├── ./CLEAN_ARCHITECTURE.md
 ├── ./README.md
+├── ./api.http
 ├── ./backend
 │   ├── ./backend/cmd
 │   │   └── ./backend/cmd/server
@@ -68,4 +69,4 @@
     │   └── ./frontend/public/window.svg
     └── ./frontend/tsconfig.json
 
-18 directories, 50 files
+18 directories, 51 files

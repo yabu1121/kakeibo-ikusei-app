@@ -28,18 +28,21 @@ func main() {
 	characterPers := sqlite.NewCharacterPersistence(db)
 	categoryPers := sqlite.NewCategoryPersistence(db)
 	slackRepo := slack.NewSlackNotifier(slackURL)
+	userRepo := sqlite.NewUserPersistence(db)
 
 	// Usecase層: アプリケーションのビジネスロジックを生成
 	expenseUsecase := usecase.NewExpenseUsecase(expensePers, characterPers, slackRepo)
 	characterUsecase := usecase.NewCharacterUsecase(characterPers)
 	categoryUsecase := usecase.NewCategoryUsecase(categoryPers)
 	slackUsecase := usecase.NewSlackUsecase(slackRepo)
+	userUsecase := usecase.NewUserUsecase(userRepo)
 
 	// Handler層: HTTPハンドラーを生成
 	expenseHandler := handler.NewExpenseHandler(expenseUsecase)
 	characterHandler := handler.NewCharacterHandler(characterUsecase)
 	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
 	slackHandler := handler.NewSlackHandler(slackUsecase)
+	userHandler := handler.NewUserHandler(userUsecase)
 
 	e := echo.New()
 	e.POST("/expense", expenseHandler.RecordExpense)
@@ -51,6 +54,7 @@ func main() {
 	e.GET("/category", categoryHandler.GetAll)
 	e.POST("/category", categoryHandler.Create)
 	e.POST("/slack/notify", slackHandler.Notify)
+	e.POST("/user/signup", userHandler.SignUp)
 
 	e.Start(":8080")
 }

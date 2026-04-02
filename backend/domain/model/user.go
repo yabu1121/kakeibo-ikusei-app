@@ -5,6 +5,6 @@ type User struct {
 	Name string `gorm:"not null"`
 	Email string `gorm:"uniqueIndex;not null"`
 	HashedPassword string `gorm:"not null"`
-	Character Character `gorm:"foreignKey:UserID"`
+	Character *Character `gorm:"foreignKey:UserID"`
 	Timestamps
 }

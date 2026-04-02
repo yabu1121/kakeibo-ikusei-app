@@ -39,3 +39,14 @@ Content-Type: application/json
 {
   "message": "slack message from goalngggggggggggg"
 }
+
+
+### 
+POST {{baseUrl}}/user/signup
+Content-Type: application/json
+
+{
+  "name": "name1",
+  "email": "test@test.com",
+  "password": "password"
+}
