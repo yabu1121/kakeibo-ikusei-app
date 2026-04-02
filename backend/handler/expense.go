@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/kakebon/backend/domain/model"
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo/v4"
@@ -35,6 +36,7 @@ func (h *ExpenseHandler) RecordExpense(c echo.Context) error {
 	userID := "dummy-user-id"
 
 	expense := &model.Expense{
+		ID:         uuid.New().String(),
 		Name:       req.Name,
 		Amount:     req.Amount,
 		CategoryID: req.CategoryID,
@@ -64,7 +66,7 @@ func (h *ExpenseHandler) DeleteByID (c echo.Context) error {
 	if err := h.usecase.Delete(id); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to delete expense"})
 	}
-	return c.JSON(http.StatusNoContent, map[string]string{"message": "delete successful"})
+	return c.NoContent(http.StatusNoContent)
 } 
 
 func (h *ExpenseHandler) GetByID (c echo.Context) error {

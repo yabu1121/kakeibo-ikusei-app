@@ -1,6 +1,9 @@
 package usecase
 
 import (
+	"log"
+	"strconv"
+
 	"github.com/kakebon/backend/domain/model"
 	"github.com/kakebon/backend/domain/repository"
 	"github.com/kakebon/backend/domain/service"
@@ -9,10 +12,11 @@ import (
 type ExpenseUsecase struct {
 	expenseRepo   repository.ExpenseRepository
 	characterRepo repository.CharacterRepository
+	notifier repository.Notifier
 }
 
-func NewExpenseUsecase(er repository.ExpenseRepository, cr repository.CharacterRepository) *ExpenseUsecase {
-	return &ExpenseUsecase{expenseRepo: er, characterRepo: cr}
+func NewExpenseUsecase(er repository.ExpenseRepository, cr repository.CharacterRepository, n repository.Notifier) *ExpenseUsecase {
+	return &ExpenseUsecase{expenseRepo: er, characterRepo: cr, notifier: n}
 }
 
 func (u *ExpenseUsecase) RecordExpense(expense *model.Expense) (*model.Character, error) {
@@ -23,7 +27,12 @@ func (u *ExpenseUsecase) RecordExpense(expense *model.Expense) (*model.Character
 	if err != nil {
 		return nil, err
 	}
+
+	if err := u.notifier.Send(strconv.Itoa(expense.Amount) + "使用しました"); err != nil {
+		log.Printf("failed to send notification: %v", err)
+	}
 	service.CalcExp(char, expense.Amount/100)
+	
 	if err := u.characterRepo.Update(char); err != nil {
 		return nil, err
 	}
@@ -46,12 +55,16 @@ func (u *ExpenseUsecase) Delete(id string) error {
 	}
 
 	exp := expense.Amount / 100
-	char.CurrentExp -= exp
+	if char.CurrentExp >= exp {
+		char.CurrentExp -= exp
+	} else {
+		char.CurrentExp = 0
+	}
 
 	if err := u.characterRepo.Update(char); err != nil {
 		return err
 	}
-	
+
 	if err := u.expenseRepo.Delete(id); err != nil {
 		return err
 	}

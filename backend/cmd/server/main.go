@@ -30,7 +30,7 @@ func main() {
 	slackRepo := slack.NewSlackNotifier(slackURL)
 
 	// Usecase層: アプリケーションのビジネスロジックを生成
-	expenseUsecase := usecase.NewExpenseUsecase(expensePers, characterPers)
+	expenseUsecase := usecase.NewExpenseUsecase(expensePers, characterPers, slackRepo)
 	characterUsecase := usecase.NewCharacterUsecase(characterPers)
 	categoryUsecase := usecase.NewCategoryUsecase(categoryPers)
 	slackUsecase := usecase.NewSlackUsecase(slackRepo)
@@ -44,6 +44,8 @@ func main() {
 	e := echo.New()
 	e.POST("/expense", expenseHandler.RecordExpense)
 	e.GET("/expense", expenseHandler.GetAllExpense)
+	e.DELETE("/expense/:id", expenseHandler.DeleteByID)
+	e.GET("/expense/:id", expenseHandler.GetByID)
 	e.GET("/character", characterHandler.GetCharacterInformation)
 	e.POST("/character/login", characterHandler.LoginBonus)
 	e.GET("/category", categoryHandler.GetAll)

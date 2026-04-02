@@ -1,6 +1,7 @@
 package sqlite
 
 import (
+	"github.com/google/uuid"
 	"github.com/kakebon/backend/domain/model"
 	"gorm.io/gorm"
 )
@@ -15,7 +16,14 @@ func NewCharacterPersistence(db *gorm.DB) *characterPersistence {
 
 func (p *characterPersistence) GetByUserId(userID string) (*model.Character, error) {
 	var char model.Character
-	if err := p.DB.Where("user_id = ?", userID).First(&char).Error; err != nil {
+	err := p.DB.Where("user_id = ?", userID).Attrs(model.Character{
+		ID:             uuid.New().String(),
+		UserID:         userID,
+		CurrentLevel:   1,
+		CurrentExp:     0,
+		ExpToNextLevel: 100,
+	}).FirstOrCreate(&char).Error
+	if err != nil {
 		return nil, err
 	}
 	return &char, nil

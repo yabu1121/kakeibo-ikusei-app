@@ -2,7 +2,6 @@ package sqlite
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/kakebon/backend/domain/model"
 	"gorm.io/gorm"
