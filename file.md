@@ -9,6 +9,7 @@
 │   │       └── ./backend/cmd/server/main.go
 │   ├── ./backend/domain
 │   │   ├── ./backend/domain/model
+│   │   │   ├── ./backend/domain/model/assets.go
 │   │   │   ├── ./backend/domain/model/category.go
 │   │   │   ├── ./backend/domain/model/character.go
 │   │   │   ├── ./backend/domain/model/expense.go
@@ -18,7 +19,8 @@
 │   │   │   ├── ./backend/domain/repository/category.go
 │   │   │   ├── ./backend/domain/repository/character.go
 │   │   │   ├── ./backend/domain/repository/expense.go
-│   │   │   └── ./backend/domain/repository/notifier.go
+│   │   │   ├── ./backend/domain/repository/notifier.go
+│   │   │   └── ./backend/domain/repository/user.go
 │   │   └── ./backend/domain/service
 │   │       └── ./backend/domain/service/exp.go
 │   ├── ./backend/go.mod
@@ -27,21 +29,24 @@
 │   │   ├── ./backend/handler/category.go
 │   │   ├── ./backend/handler/character.go
 │   │   ├── ./backend/handler/expense.go
-│   │   └── ./backend/handler/slack.go
+│   │   ├── ./backend/handler/slack.go
+│   │   └── ./backend/handler/user.go
 │   ├── ./backend/infrastructure
 │   │   ├── ./backend/infrastructure/db.go
 │   │   ├── ./backend/infrastructure/persistence
 │   │   │   └── ./backend/infrastructure/persistence/sqlite
 │   │   │       ├── ./backend/infrastructure/persistence/sqlite/category.go
 │   │   │       ├── ./backend/infrastructure/persistence/sqlite/character.go
-│   │   │       └── ./backend/infrastructure/persistence/sqlite/expense.go
+│   │   │       ├── ./backend/infrastructure/persistence/sqlite/expense.go
+│   │   │       └── ./backend/infrastructure/persistence/sqlite/user.go
 │   │   └── ./backend/infrastructure/slack
 │   │       └── ./backend/infrastructure/slack/notifier.go
 │   └── ./backend/usecase
 │       ├── ./backend/usecase/category.go
 │       ├── ./backend/usecase/character.go
 │       ├── ./backend/usecase/expense.go
-│       └── ./backend/usecase/slack_notifier.go
+│       ├── ./backend/usecase/slack_notifier.go
+│       └── ./backend/usecase/user.go
 ├── ./file.md
 └── ./frontend
     ├── ./frontend/AGENTS.md
@@ -69,4 +74,4 @@
     │   └── ./frontend/public/window.svg
     └── ./frontend/tsconfig.json
 
-18 directories, 51 files
+18 directories, 56 files
