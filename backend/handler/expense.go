@@ -55,3 +55,26 @@ func (h *ExpenseHandler) GetAllExpense(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, expenses)
 }
+
+func (h *ExpenseHandler) DeleteByID (c echo.Context) error {
+	id := c.Param("id")
+	if id == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+	if err := h.usecase.Delete(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to delete expense"})
+	}
+	return c.JSON(http.StatusNoContent, map[string]string{"message": "delete successful"})
+} 
+
+func (h *ExpenseHandler) GetByID (c echo.Context) error {
+	id := c.Param("id")
+	if id == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+	res, err := h.usecase.GetByID(id); 
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "failed to get expense by this id"})
+	}
+	return c.JSON(http.StatusOK, res)
+}

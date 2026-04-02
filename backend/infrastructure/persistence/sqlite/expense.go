@@ -1,6 +1,9 @@
 package sqlite
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/kakebon/backend/domain/model"
 	"gorm.io/gorm"
 )
@@ -23,4 +26,24 @@ func (p *expensePersistence) GetAll() ([]model.Expense, error) {
 		return nil, err
 	}
 	return expenses, nil
+}
+
+func (p *expensePersistence) Delete(id string) error {
+	res := p.DB.Where("id = ?", id).Delete(&model.Expense{}); 
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return fmt.Errorf("record not found")
+	}
+	return nil
+}
+
+func (p *expensePersistence) GetByID(id string) (*model.Expense, error) {
+	var res model.Expense
+	
+	if err := p.DB.Where("id = ?", id).First(&res).Error; err != nil {
+		return nil, err
+	}
+	return &res, nil
 }

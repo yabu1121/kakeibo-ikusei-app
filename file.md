@@ -52,6 +52,9 @@
     │   ├── ./frontend/app/layout.tsx
     │   └── ./frontend/app/page.tsx
     ├── ./frontend/eslint.config.mjs
+    ├── ./frontend/lib
+    │   └── ./frontend/lib/server
+    │       └── ./frontend/lib/server/api.ts
     ├── ./frontend/next-env.d.ts
     ├── ./frontend/next.config.ts
     ├── ./frontend/package-lock.json
@@ -65,4 +68,4 @@
     │   └── ./frontend/public/window.svg
     └── ./frontend/tsconfig.json
 
-16 directories, 49 files
+18 directories, 50 files

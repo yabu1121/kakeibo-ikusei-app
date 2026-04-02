@@ -33,3 +33,32 @@ func (u *ExpenseUsecase) RecordExpense(expense *model.Expense) (*model.Character
 func (u *ExpenseUsecase) GetAll() ([]model.Expense, error) {
 	return u.expenseRepo.GetAll()
 }
+
+func (u *ExpenseUsecase) Delete(id string) error {
+	expense, err := u.expenseRepo.GetByID(id)
+	if err != nil {
+		return err
+	}
+	
+	char, err := u.characterRepo.GetByUserId(expense.UserID)
+	if err != nil {
+		return err
+	}
+
+	exp := expense.Amount / 100
+	char.CurrentExp -= exp
+
+	if err := u.characterRepo.Update(char); err != nil {
+		return err
+	}
+	
+	if err := u.expenseRepo.Delete(id); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (u *ExpenseUsecase) GetByID (id string) (*model.Expense, error) {
+	return u.expenseRepo.GetByID(id)
+}
