@@ -1,0 +1,55 @@
+package handler
+
+import (
+	"net/http"
+
+	"github.com/kakebon/backend/usecase"
+	"github.com/labstack/echo/v4"
+)
+
+type CharacterHandler struct {
+	usecase *usecase.CharacterUsecase
+}
+
+func NewCharacterHandler(u *usecase.CharacterUsecase) *CharacterHandler {
+	return &CharacterHandler{usecase: u}
+}
+
+type CharacterResponse struct {
+	CurrentLevel   int    `json:"current_level"`
+	CurrentExp     int    `json:"current_exp"`
+	ExpToNextLevel int    `json:"exp_to_next_level"`
+	ImageURL       string `json:"image_url"`
+}
+
+func (h *CharacterHandler) GetCharacterInformation(c echo.Context) error {
+	// TODO: JWT認証後はトークンからuserIDを取得する
+	userID := "dummy-user-id"
+	char, err := h.usecase.GetByUserID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to get character"})
+	}
+	res := CharacterResponse{
+		CurrentLevel:   char.CurrentLevel,
+		CurrentExp:     char.CurrentExp,
+		ExpToNextLevel: char.ExpToNextLevel,
+		ImageURL:       char.ImageURL,
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
+func (h *CharacterHandler) LoginBonus(c echo.Context) error {
+	// TODO: JWT認証後はトークンからuserIDを取得する
+	userID := "dummy-user-id"
+	char, err := h.usecase.LoginBonus(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to apply login bonus"})
+	}
+	res := CharacterResponse{
+		CurrentLevel:   char.CurrentLevel,
+		CurrentExp:     char.CurrentExp,
+		ExpToNextLevel: char.ExpToNextLevel,
+		ImageURL:       char.ImageURL,
+	}
+	return c.JSON(http.StatusOK, res)
+}
