@@ -33,6 +33,7 @@ func main() {
 	e.GET("/character", characterHandler.GetCharacterInformation)
 	e.POST("/character/login", characterHandler.LoginBonus)
 	e.GET("/category", categoryHandler.GetAll)
-
+	e.POST("/category", categoryHandler.Create)
+	
 	e.Start(":8080")
 }

@@ -20,3 +20,7 @@ func (p *categoryPersistence) GetAll () ([]model.Category, error) {
 	}
 	return categories, nil
 }
+
+func (p *categoryPersistence) Create (category *model.Category) error {
+	return p.DB.Create(category).Error
+}

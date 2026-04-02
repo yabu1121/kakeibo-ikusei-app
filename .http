@@ -23,3 +23,11 @@ POST {{baseUrl}}/character/login
 
 ###
 GET {{baseUrl}}/category
+
+###
+POST {{baseUrl}}/category
+Content-Type: application/json
+
+{
+  "name": "life"
+}
