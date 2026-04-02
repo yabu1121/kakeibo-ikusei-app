@@ -17,6 +17,7 @@ func InitDB() *gorm.DB {
 		&model.User{}, 
 		&model.Character{}, 
 		&model.Category{}, 
-		&model.Expense{})
+		&model.Expense{},
+	)
 	return db
 }

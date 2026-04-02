@@ -12,22 +12,27 @@ func main() {
 	db := infrastructure.InitDB()
 
 	// Infrastructure層: リポジトリの実装を生成
-	expenseRepo := sqlite.NewExpenseRepository(db)
-	characterRepo := sqlite.NewCharacterRepository(db)
+	expensePers := sqlite.NewExpensePersistence(db)
+	characterPers := sqlite.NewCharacterPersistence(db)
+	categoryPers := sqlite.NewCategoryPersistence(db)
+	
 
 	// Usecase層: アプリケーションのビジネスロジックを生成
-	expenseUsecase := usecase.NewExpenseUsecase(expenseRepo, characterRepo)
-	characterUsecase := usecase.NewCharacterUsecase(characterRepo)
+	expenseUsecase := usecase.NewExpenseUsecase(expensePers, characterPers)
+	characterUsecase := usecase.NewCharacterUsecase(characterPers)
+	categoryUsecase := usecase.NewCategoryUsecase(categoryPers)
 
 	// Handler層: HTTPハンドラーを生成
 	expenseHandler := handler.NewExpenseHandler(expenseUsecase)
 	characterHandler := handler.NewCharacterHandler(characterUsecase)
+	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
 
 	e := echo.New()
 	e.POST("/expense", expenseHandler.RecordExpense)
 	e.GET("/expense", expenseHandler.GetAllExpense)
 	e.GET("/character", characterHandler.GetCharacterInformation)
 	e.POST("/character/login", characterHandler.LoginBonus)
+	e.GET("/category", categoryHandler.GetAll)
 
 	e.Start(":8080")
 }

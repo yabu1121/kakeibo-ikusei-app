@@ -9,7 +9,7 @@ type characterPersistence struct {
 	DB *gorm.DB
 }
 
-func NewCharacterRepository(db *gorm.DB) *characterPersistence {
+func NewCharacterPersistence(db *gorm.DB) *characterPersistence {
 	return &characterPersistence{ DB: db }
 }
 

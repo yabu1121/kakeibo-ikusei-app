@@ -20,3 +20,6 @@ GET {{baseUrl}}/character
 ###
 
 POST {{baseUrl}}/character/login
+
+###
+GET {{baseUrl}}/category

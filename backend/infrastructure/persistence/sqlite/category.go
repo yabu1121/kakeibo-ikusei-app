@@ -10,7 +10,7 @@ type categoryPersistence struct {
 }
 
 func NewCategoryPersistence(db *gorm.DB) *categoryPersistence {
-	return &categoryPersistence{}
+	return &categoryPersistence{DB: db}
 }
 
 func (p *categoryPersistence) GetAll () ([]model.Category, error) {
