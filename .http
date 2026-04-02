@@ -31,3 +31,11 @@ Content-Type: application/json
 {
   "name": "life"
 }
+
+### 
+POST {{baseUrl}}/slack/notify
+Content-Type: application/json
+
+{
+  "message": "slack message from goalngggggggggggg"
+}
