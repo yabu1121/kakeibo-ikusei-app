@@ -34,3 +34,17 @@ func (h *UserHandler) SignUp(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, user)
 }
+
+func (h *UserHandler) GetByEmail(c echo.Context) error {
+	email := c.QueryParam("email")
+	if email == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "email query param is required"})
+	}
+
+	user, err := h.usecase.GetByEmail(email)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
+	}
+
+	return c.JSON(http.StatusOK, user)
+}

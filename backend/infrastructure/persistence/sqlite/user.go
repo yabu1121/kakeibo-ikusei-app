@@ -16,3 +16,11 @@ func NewUserPersistence (db *gorm.DB) *UserPersistence {
 func (p *UserPersistence) Create (user *model.User) error {
 	return p.DB.Create(user).Error
 }
+
+func (p *UserPersistence) GetByEmail (email string) (*model.User, error) {
+	var user model.User
+	if err := p.DB.Where("email = ?", email).Preload("Character").First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

@@ -55,6 +55,7 @@ func main() {
 	e.POST("/category", categoryHandler.Create)
 	e.POST("/slack/notify", slackHandler.Notify)
 	e.POST("/user/signup", userHandler.SignUp)
+	e.GET("/user", userHandler.GetByEmail)
 
 	e.Start(":8080")
 }
