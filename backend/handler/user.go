@@ -2,7 +2,10 @@ package handler
 
 import (
 	"net/http"
+	"os"
+	"time"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -17,6 +20,11 @@ func NewUserHandler (u *usecase.UserUsecase) *UserHandler {
 
 type createRequest struct {
 	Name string `json:"name"`
+	Email string `json:"email"`
+	Password string `json:"password"`
+}
+
+type loginRequest struct {
 	Email string `json:"email"`
 	Password string `json:"password"`
 }
@@ -47,4 +55,30 @@ func (h *UserHandler) GetByEmail(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, user)
+}
+
+func (h *UserHandler) Login(c echo.Context) error {
+	var req loginRequest
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+
+	user, err := h.usecase.Login(req.Email, req.Password)
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, map[string]string{"error": err.Error()})
+	}
+
+	claims := jwt.MapClaims{
+		"user_id": user.ID,
+		"exp": time.Now().Add(72 * time.Hour).Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+
+	secretKey := os.Getenv("JWT_SECRET_KEY")
+	t, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{"token": t})
 }

@@ -54,3 +54,14 @@ func (u *UserUsecase) GetByEmail (email string) (*model.User, error) {
 	}
 	return user, nil
 }
+
+func (u *UserUsecase) Login(email string, password string) (*model.User, error) {
+	user, err := u.repo.GetByEmail(email)
+	if err != nil {
+		return nil, fmt.Errorf("ログイン情報が違います")
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword),[]byte(password)); err != nil {
+		return nil, fmt.Errorf("ログイン情報が違います")
+	}
+	return user, nil
+}
