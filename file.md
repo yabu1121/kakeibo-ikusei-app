@@ -30,7 +30,9 @@
 │   │   ├── ./backend/handler/character.go
 │   │   ├── ./backend/handler/expense.go
 │   │   ├── ./backend/handler/slack.go
-│   │   └── ./backend/handler/user.go
+│   │   ├── ./backend/handler/user.go
+│   │   └── ./backend/handler/utils
+│   │       └── ./backend/handler/utils/auth.go
 │   ├── ./backend/infrastructure
 │   │   ├── ./backend/infrastructure/db.go
 │   │   ├── ./backend/infrastructure/persistence
@@ -74,4 +76,4 @@
     │   └── ./frontend/public/window.svg
     └── ./frontend/tsconfig.json
 
-18 directories, 56 files
+19 directories, 57 files
