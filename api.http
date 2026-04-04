@@ -1,18 +1,21 @@
 @baseUrl=http://localhost:8080
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzU1ODA3NzQsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6IjMyYTNmMTgzLTE1MTItNGViNi05NmRiLWM1NjlkOWY4MGYzMSJ9.akip1QQI-hRIuJVmHwVr6EfJbMt_w7-rlBAHTlzpKRg
 
 ###
 GET {{baseUrl}}
 
 ### 
-POST {{baseUrl}}/expense
+POST {{baseUrl}}/user/expense
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "amount": 800
 }
 
 ### 
-GET {{baseUrl}}/expense
+GET {{baseUrl}}/admin/expense
+Authorization: Bearer {{token}}
 
 ### 
 GET {{baseUrl}}/character
@@ -46,7 +49,18 @@ POST {{baseUrl}}/user/signup
 Content-Type: application/json
 
 {
-  "name": "name1",
-  "email": "test@test.com",
+  "name": "name2",
+  "email": "test2@test.com",
   "password": "password"
 }
+
+### 
+POST {{baseUrl}}/user/login
+Content-Type: application/json
+
+{
+  "email": "test2@test.com",
+  "password": "password"  
+}
+
+### 

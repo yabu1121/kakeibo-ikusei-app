@@ -5,12 +5,14 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/kakebon/backend/handler"
+	"github.com/kakebon/backend/handler/utils"
 	"github.com/kakebon/backend/infrastructure"
 	"github.com/kakebon/backend/infrastructure/persistence/sqlite"
 	"github.com/kakebon/backend/infrastructure/slack"
 	"github.com/kakebon/backend/usecase"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo-jwt/v4"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -55,6 +57,7 @@ func main() {
 	user.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey: []byte(secretKey),
 	}))
+	user.Use(utils.CheckRole("user"))
 	user.POST("/expense", expenseHandler.RecordExpense)
 	user.DELETE("/expense/:id", expenseHandler.DeleteByID)
 	user.GET("/expense/:id", expenseHandler.GetByID)
@@ -65,6 +68,7 @@ func main() {
 	user.POST("/slack/notify", slackHandler.Notify)
 	
 	admin := e.Group("/admin")
+	admin.Use(utils.CheckRole("admin"))
 	admin.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey: []byte(secretKey),
 	}))
