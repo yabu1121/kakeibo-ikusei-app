@@ -72,7 +72,7 @@ func (h *UserHandler) Login(c echo.Context) error {
 		"user_id": user.ID,
 		"exp": time.Now().Add(72 * time.Hour).Unix(),
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	secretKey := os.Getenv("JWT_SECRET_KEY")
 	t, err := token.SignedString([]byte(secretKey))

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
@@ -20,9 +21,10 @@ func NewExpenseHandler(u *usecase.ExpenseUsecase) *ExpenseHandler {
 }
 
 type ExpenseRequest struct {
-	Name       string `json:"name"`
-	Amount     int    `json:"amount"`
-	CategoryID string `json:"category_id"`
+	Name       string    `json:"name"`
+	Amount     int       `json:"amount"`
+	CategoryID string    `json:"category_id"`
+	OccuredAt  time.Time `json:"occured_at"`
 }
 
 func (h *ExpenseHandler) RecordExpense(c echo.Context) error {
@@ -43,6 +45,7 @@ func (h *ExpenseHandler) RecordExpense(c echo.Context) error {
 		ID:         uuid.New().String(),
 		Name:       req.Name,
 		Amount:     req.Amount,
+		OccuredAt: 	req.OccuredAt,
 		CategoryID: req.CategoryID,
 		UserID:     userID,
 	}
