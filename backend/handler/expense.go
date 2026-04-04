@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
 	"github.com/kakebon/backend/domain/model"
 	"github.com/kakebon/backend/handler/utils"

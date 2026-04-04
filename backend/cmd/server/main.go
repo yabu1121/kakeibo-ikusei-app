@@ -10,6 +10,7 @@ import (
 	"github.com/kakebon/backend/infrastructure/slack"
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo-jwt/v4"
 )
 
 func main() {
@@ -45,17 +46,30 @@ func main() {
 	userHandler := handler.NewUserHandler(userUsecase)
 
 	e := echo.New()
-	e.POST("/expense", expenseHandler.RecordExpense)
-	e.GET("/expense", expenseHandler.GetAllExpense)
-	e.DELETE("/expense/:id", expenseHandler.DeleteByID)
-	e.GET("/expense/:id", expenseHandler.GetByID)
-	e.GET("/character", characterHandler.GetCharacterInformation)
-	e.POST("/character/login", characterHandler.LoginBonus)
-	e.GET("/category", categoryHandler.GetAll)
-	e.POST("/category", categoryHandler.Create)
-	e.POST("/slack/notify", slackHandler.Notify)
+	e.POST("/user/login", userHandler.Login)
 	e.POST("/user/signup", userHandler.SignUp)
-	e.GET("/user", userHandler.GetByEmail)
+
+
+	secretKey := os.Getenv("JWT_SECRET_KEY")
+	user := e.Group("/user")
+	user.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey: []byte(secretKey),
+	}))
+	user.POST("/expense", expenseHandler.RecordExpense)
+	user.DELETE("/expense/:id", expenseHandler.DeleteByID)
+	user.GET("/expense/:id", expenseHandler.GetByID)
+	user.GET("/character", characterHandler.GetCharacterInformation)
+	user.POST("/character/login", characterHandler.LoginBonus)
+	user.GET("/category", categoryHandler.GetAll)
+	user.POST("/category", categoryHandler.Create)
+	user.POST("/slack/notify", slackHandler.Notify)
+	
+	admin := e.Group("/admin")
+	admin.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey: []byte(secretKey),
+	}))
+	admin.GET("/expense", expenseHandler.GetAllExpense)
+
 
 	e.Start(":8080")
 }

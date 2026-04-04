@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 
-	"github.com/golang-jwt/jwt"
 	"github.com/kakebon/backend/handler/utils"
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo/v4"

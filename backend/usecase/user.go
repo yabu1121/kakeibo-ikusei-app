@@ -30,6 +30,7 @@ func (u *UserUsecase) Create (name, email, password string) (*model.User ,error)
 		ID: newUserID,
 		Name: name,
 		Email: email,
+		Role: "user",
 		HashedPassword: string(hashedPassword),
 		Character: &model.Character{
 			ID: newCharID,

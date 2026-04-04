@@ -70,6 +70,7 @@ func (h *UserHandler) Login(c echo.Context) error {
 
 	claims := jwt.MapClaims{
 		"user_id": user.ID,
+		"role": user.Role,
 		"exp": time.Now().Add(72 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
