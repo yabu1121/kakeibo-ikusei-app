@@ -12,7 +12,6 @@ import (
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -68,10 +67,10 @@ func main() {
 	user.POST("/slack/notify", slackHandler.Notify)
 	
 	admin := e.Group("/admin")
-	admin.Use(utils.CheckRole("admin"))
 	admin.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey: []byte(secretKey),
 	}))
+	admin.Use(utils.CheckRole("admin"))
 	admin.GET("/expense", expenseHandler.GetAllExpense)
 
 
