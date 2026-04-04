@@ -46,3 +46,7 @@ func (p *expensePersistence) GetByID(id string) (*model.Expense, error) {
 	}
 	return &res, nil
 }
+
+func (p *expensePersistence) Update (id string, expense *model.Expense) (*model.Expense, error) {
+	return expense, p.DB.Save(expense).Error
+}

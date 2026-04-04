@@ -57,15 +57,21 @@ func main() {
 		SigningKey: []byte(secretKey),
 	}))
 	user.Use(utils.CheckRole("user"))
+	
 	user.POST("/expense", expenseHandler.RecordExpense)
 	user.DELETE("/expense/:id", expenseHandler.DeleteByID)
 	user.GET("/expense/:id", expenseHandler.GetByID)
+	user.PUT("/expense/:id", expenseHandler.Update)
+
 	user.GET("/character", characterHandler.GetCharacterInformation)
 	user.POST("/character/login", characterHandler.LoginBonus)
+
 	user.GET("/category", categoryHandler.GetAll)
 	user.POST("/category", categoryHandler.Create)
+
 	user.POST("/slack/notify", slackHandler.Notify)
 	
+
 	admin := e.Group("/admin")
 	admin.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey: []byte(secretKey),

@@ -86,3 +86,34 @@ func (h *ExpenseHandler) GetByID (c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, res)
 }
+
+func (h *ExpenseHandler) Update (c echo.Context) error {
+	id := c.Param("id")
+	if id == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "id is required"})
+	}
+
+	var req ExpenseRequest
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+
+	userID, err := utils.GetUserID(c)
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "unauthorized"})
+	}
+	new_expense := &model.Expense{
+		ID: id,
+		Name: req.Name,
+		Amount: req.Amount,
+		OccuredAt: req.OccuredAt,
+		CategoryID: req.CategoryID,
+		UserID: userID,
+	}
+	
+	res, err := h.usecase.Update(id, new_expense)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to update expense"})
+	}
+	return c.JSON(http.StatusOK, res)
+}

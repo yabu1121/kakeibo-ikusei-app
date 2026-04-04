@@ -75,3 +75,33 @@ func (u *ExpenseUsecase) Delete(id string) error {
 func (u *ExpenseUsecase) GetByID (id string) (*model.Expense, error) {
 	return u.expenseRepo.GetByID(id)
 }
+
+func (u *ExpenseUsecase) Update (id string, expense *model.Expense) (*model.Expense, error) {
+	now_expense, err := u.expenseRepo.GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+	now_exp := now_expense.Amount / 100
+	next_exp := expense.Amount / 100
+
+	char, err := u.characterRepo.GetByUserId(expense.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	if char.CurrentExp >= now_exp {
+		char.CurrentExp -= now_exp
+	} else {
+		char.CurrentExp = 0
+	}
+	char.CurrentExp = char.CurrentExp + next_exp
+	
+	if err := u.characterRepo.Update(char); err != nil {
+		return nil, err
+	}
+	updated, err := u.expenseRepo.Update(id, expense); 
+	if err != nil {
+		return nil, err 
+	}
+	return updated, nil
+}
