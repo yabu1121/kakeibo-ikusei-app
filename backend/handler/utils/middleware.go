@@ -6,7 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
-func CheckRole(targetRole string) echo.MiddlewareFunc {
+func  CheckRole(targetRole string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			user, ok := c.Get("user").(*jwt.Token)
