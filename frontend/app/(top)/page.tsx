@@ -5,13 +5,13 @@ import Link from 'next/link'
 
 export default async function TopPage() {
   const character = await getCharacter()
-
+  const frontURL = process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000"
   return (
     <main>
       <h1>かけぼん</h1>
       {character ? (
         <div>
-          <Image src={character.image_url} alt={`レベル${character.current_level}`} width={200} height={200}/>
+          <Image src={`${frontURL}${character.image_url}`} alt={`レベル${character.current_level}`} width={200} height={200}/>
           <p>Lv.{character.current_level}</p>
           <p>
             EXP: {character.current_exp} / {character.exp_to_next_level}
