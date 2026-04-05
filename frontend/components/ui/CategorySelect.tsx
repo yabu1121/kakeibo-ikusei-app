@@ -79,7 +79,7 @@ export const CategorySelect = ({ categories }: Props) => {
           onKeyDown={handleKeyDown}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          className="w-full flex items-center justify-between border rounded px-3 py-2 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full flex items-center justify-between border rounded-lg px-3 py-2 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <span>{selectedName}</span>
           <span
