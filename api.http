@@ -19,7 +19,6 @@ Authorization: Bearer {{token}}
 
 ### 
 GET {{baseUrl}}/character
-
 ###
 
 POST {{baseUrl}}/character/login
