@@ -1,42 +1,48 @@
-const BaseURL = process.env.BACKEND_URL || 'http://localhost:8080';
+import { Category, Character } from '@/types/type'
+import { cookies } from 'next/headers'
 
-type ApiRequestOptions = {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  path: string;
-  body?: unknown;
-  errorMessage?: string;
-};
+const BASE_URL = process.env.BACKEND_URL || 'http://localhost:8080'
 
-async function request<T>({ method, path, body, errorMessage }: ApiRequestOptions): Promise<T> {
-  const urlPath = path.startsWith('/') ? path : `/${path}`;
-  const url = `${BaseURL}${urlPath}`;
+export async function apiFetch(path: string, options?: RequestInit) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
 
-  const res = await fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-
-  if (!res.ok) {
-    console.error(`API ERROR ${res.status} : ${method} ${url}`);
-    throw new Error(`${errorMessage || '通信に失敗しました'} (Status: ${res.status})`);
-  }
-
-  if (res.status === 204) return {} as T;
-  
-  return res.json() as Promise<T>;
+  return fetch(`${BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options?.headers,
+    },
+  })
 }
 
-export const api = {
-  get: <T>(path: string, error?: string) => 
-    request<T>({ method: 'GET', path, errorMessage: error }),
 
-  post: <T>(path: string, body: unknown, error?: string) => 
-    request<T>({ method: 'POST', path, body, errorMessage: error }),
+export async function getToken() {
+  const cookieStore = await cookies()
+  return cookieStore.get('token')?.value
+}
 
-  update: <T>(path: string, body: unknown, error?: string) => 
-    request<T>({ method: 'PUT', path, body, errorMessage: error }),
+export async function getCategories(): Promise<Category[]> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
+  if (!token) return []
 
-  delete: <T>(path: string, error?: string) => 
-    request<T>({ method: 'DELETE', path, errorMessage: error }),
-};
+  const res = await fetch(`${BASE_URL}/user/category`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) return []
+  return res.json()
+}
+
+export async function getCharacter(): Promise<Character | null> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
+  if (!token) return null
+
+  const res = await fetch(`${BASE_URL}/user/character`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) return null
+  return res.json()
+}

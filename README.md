@@ -34,3 +34,30 @@ domain => repository => persistense => interface => usecase
             ├── db.go         # SQLite接続設定
             ├── expense.go    # GORMを使った具体的な保存処理
             └── character.go
+
+### 実装済みapi
+getAllCategory (すべてのカテゴリー取得)
+
+CreateCategory (カテゴリー作成)
+
+GetCharacterInfomation (キャラクターの情報取得)
+
+LoginBonus (ログインボーナスのキャラクター経験値付与関数)
+
+RecordExpense （消費を記録する関数)
+
+GetAllExpense (消費を人関係なしに取得する関数)
+
+GetByID (消費をIDで取得する関数)
+
+DeleteByID (消費をIDで削除、ポイント付与取り上げ関数)
+
+Notify (メッセージを受け取ってslackに送信する関数)
+
+SignUp (キャラクター)
+
+GetByEmail (emailでユーザが存在するかを返す関数)
+
+Login (jwt発行)
+
+UpdateExpense (消費を経験値がらみでアップデートする)

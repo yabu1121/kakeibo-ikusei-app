@@ -12,7 +12,7 @@ var CharacterImages = map[int]string{
     9: "/images/char/level9.jpg",
     10: "/images/char/level10.jpg",
     11: "/images/char/level11.jpg",
-    12: "/images/char/level11.jpg",
+    12: "/images/char/level12.jpg",
     13: "/images/char/level13.jpg",
     14: "/images/char/level14.jpg",
     15: "/images/char/level15.jpg",

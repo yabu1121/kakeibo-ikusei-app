@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	"github.com/kakebon/backend/domain/model"
 	"github.com/kakebon/backend/handler/utils"
 	"github.com/kakebon/backend/usecase"
 	"github.com/labstack/echo/v4"
@@ -37,7 +38,7 @@ func (h *CharacterHandler) GetCharacterInformation(c echo.Context) error {
 		CurrentLevel:   char.CurrentLevel,
 		CurrentExp:     char.CurrentExp,
 		ExpToNextLevel: char.ExpToNextLevel,
-		ImageURL:       char.ImageURL,
+		ImageURL:       model.GetImageByLevel(char.CurrentLevel),
 	}
 	return c.JSON(http.StatusOK, res)
 }
@@ -56,7 +57,7 @@ func (h *CharacterHandler) LoginBonus(c echo.Context) error {
 		CurrentLevel:   char.CurrentLevel,
 		CurrentExp:     char.CurrentExp,
 		ExpToNextLevel: char.ExpToNextLevel,
-		ImageURL:       char.ImageURL,
+		ImageURL:       model.GetImageByLevel(char.CurrentLevel),
 	}
 	return c.JSON(http.StatusOK, res)
 }

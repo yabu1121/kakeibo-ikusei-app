@@ -56,10 +56,18 @@
     ├── ./frontend/CLAUDE.md
     ├── ./frontend/README.md
     ├── ./frontend/app
+    │   ├── ./frontend/app/(top)
+    │   │   ├── ./frontend/app/(top)/layout.tsx
+    │   │   └── ./frontend/app/(top)/page.tsx
     │   ├── ./frontend/app/favicon.ico
     │   ├── ./frontend/app/globals.css
-    │   ├── ./frontend/app/layout.tsx
-    │   └── ./frontend/app/page.tsx
+    │   ├── ./frontend/app/login
+    │   │   └── ./frontend/app/login/page.tsx
+    │   ├── ./frontend/app/record
+    │   │   └── ./frontend/app/record/page.tsx
+    │   └── ./frontend/app/signup
+    │       └── ./frontend/app/signup/page.tsx
+    ├── ./frontend/components
     ├── ./frontend/eslint.config.mjs
     ├── ./frontend/lib
     │   └── ./frontend/lib/server
@@ -70,11 +78,34 @@
     ├── ./frontend/package.json
     ├── ./frontend/postcss.config.mjs
     ├── ./frontend/public
+    │   ├── ./frontend/public/chara
+    │   │   ├── ./frontend/public/chara/level1.jpg
+    │   │   ├── ./frontend/public/chara/level10.jpg
+    │   │   ├── ./frontend/public/chara/level11.jpg
+    │   │   ├── ./frontend/public/chara/level12.jpg
+    │   │   ├── ./frontend/public/chara/level13.jpg
+    │   │   ├── ./frontend/public/chara/level14.jpg
+    │   │   ├── ./frontend/public/chara/level15.jpg
+    │   │   ├── ./frontend/public/chara/level16.jpg
+    │   │   ├── ./frontend/public/chara/level17.jpg
+    │   │   ├── ./frontend/public/chara/level18.jpg
+    │   │   ├── ./frontend/public/chara/level19.jpg
+    │   │   ├── ./frontend/public/chara/level2.jpg
+    │   │   ├── ./frontend/public/chara/level20.jpg
+    │   │   ├── ./frontend/public/chara/level3.jpg
+    │   │   ├── ./frontend/public/chara/level4.jpg
+    │   │   ├── ./frontend/public/chara/level5.jpg
+    │   │   ├── ./frontend/public/chara/level6.jpg
+    │   │   ├── ./frontend/public/chara/level7.jpg
+    │   │   ├── ./frontend/public/chara/level8.jpg
+    │   │   └── ./frontend/public/chara/level9.jpg
     │   ├── ./frontend/public/file.svg
     │   ├── ./frontend/public/globe.svg
     │   ├── ./frontend/public/next.svg
     │   ├── ./frontend/public/vercel.svg
     │   └── ./frontend/public/window.svg
-    └── ./frontend/tsconfig.json
+    ├── ./frontend/tsconfig.json
+    └── ./frontend/types
+        └── ./frontend/types/type.ts
 
-19 directories, 58 files
+26 directories, 82 files
