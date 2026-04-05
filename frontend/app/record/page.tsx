@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { recordExpense } from '@/app/actions/expense'
 import { getCategories } from '@/lib/server/api'
+import { Title } from '@/components/ui/Title'
 
 export default async function RecordPage() {
   const categories = await getCategories()
 
   return (
     <main>
-      <h1>支出を記録</h1>
+      <Title>支出を記録</Title>
       <form action={recordExpense}>
         <div>
           <label htmlFor="name">支出名</label>
