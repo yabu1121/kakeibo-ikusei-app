@@ -1,5 +1,8 @@
+import { ComponentPropsWithRef } from "react";
+
 type FormLineProps = {
-  type : 'name' | 'email' | 'password';
+  type : 'name' | 'email' | 'password' | 'expense' | 'amount';
+  inputProps?: ComponentPropsWithRef<"input">;
 }
 
 const FIELD_CONFIG = {
@@ -20,10 +23,22 @@ const FIELD_CONFIG = {
     inputType: 'password',
     placeholder: 'パスワードを入力してください',
     autoComplete: 'current-password',
-  }
-}
+  },
+  expense: {
+    label: '支出名',
+    inputType: 'text',
+    placeholder: '支出を入力してください',
+    autoComplete: 'off',
+  },
+  amount: {
+    label: '金額',
+    inputType: 'number',
+    placeholder: '金額を入力してください',
+    autoComplete: 'off',
+  },
+} as const;
 
-export const FormLine = ({ type }: FormLineProps) => {
+export const FormLine = ({ type, inputProps }: FormLineProps) => {
   const config = FIELD_CONFIG[type]
 
   return (
@@ -39,6 +54,7 @@ export const FormLine = ({ type }: FormLineProps) => {
         autoComplete={config.autoComplete}
         required
         className="border p-2 rounded"
+        {...inputProps}
       />
     </div>
   );
