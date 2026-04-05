@@ -14,8 +14,8 @@ const TITLE_CONFIG = {
 export const Title = ({ type = 'normal', children }: TitleProps) => {
   const style = TITLE_CONFIG[type]
   return (
-    <div>
-      <h1 className={style}>{children}</h1>
+    <div className="border-b pb-4">
+      <h1 className={`${style} text-gray-800`}>{children}</h1>
     </div>
   )
 }
