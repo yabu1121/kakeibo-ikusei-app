@@ -52,15 +52,21 @@
 │       └── ./backend/usecase/user.go
 ├── ./file.md
 └── ./frontend
-    ├── ./frontend/AGENTS.md
-    ├── ./frontend/CLAUDE.md
     ├── ./frontend/README.md
     ├── ./frontend/app
     │   ├── ./frontend/app/(top)
     │   │   ├── ./frontend/app/(top)/layout.tsx
     │   │   └── ./frontend/app/(top)/page.tsx
+    │   ├── ./frontend/app/actions
+    │   │   ├── ./frontend/app/actions/auth.ts
+    │   │   ├── ./frontend/app/actions/category.ts
+    │   │   ├── ./frontend/app/actions/character.ts
+    │   │   ├── ./frontend/app/actions/expense.ts
+    │   │   ├── ./frontend/app/actions/slack.ts
+    │   │   └── ./frontend/app/actions/util.ts
     │   ├── ./frontend/app/favicon.ico
     │   ├── ./frontend/app/globals.css
+    │   ├── ./frontend/app/layout.tsx
     │   ├── ./frontend/app/login
     │   │   └── ./frontend/app/login/page.tsx
     │   ├── ./frontend/app/record
@@ -68,44 +74,53 @@
     │   └── ./frontend/app/signup
     │       └── ./frontend/app/signup/page.tsx
     ├── ./frontend/components
+    │   ├── ./frontend/components/features
+    │   │   ├── ./frontend/components/features/LoginFileld.tsx
+    │   │   ├── ./frontend/components/features/RecordFiled.tsx
+    │   │   └── ./frontend/components/features/SignUpField.tsx
+    │   └── ./frontend/components/ui
+    │       ├── ./frontend/components/ui/Button.tsx
+    │       ├── ./frontend/components/ui/CategorySelect.tsx
+    │       ├── ./frontend/components/ui/DatePicker.tsx
+    │       ├── ./frontend/components/ui/FormLine.tsx
+    │       └── ./frontend/components/ui/Title.tsx
     ├── ./frontend/eslint.config.mjs
-    ├── ./frontend/lib
-    │   └── ./frontend/lib/server
-    │       └── ./frontend/lib/server/api.ts
     ├── ./frontend/next-env.d.ts
     ├── ./frontend/next.config.ts
     ├── ./frontend/package-lock.json
     ├── ./frontend/package.json
     ├── ./frontend/postcss.config.mjs
     ├── ./frontend/public
-    │   ├── ./frontend/public/chara
-    │   │   ├── ./frontend/public/chara/level1.jpg
-    │   │   ├── ./frontend/public/chara/level10.jpg
-    │   │   ├── ./frontend/public/chara/level11.jpg
-    │   │   ├── ./frontend/public/chara/level12.jpg
-    │   │   ├── ./frontend/public/chara/level13.jpg
-    │   │   ├── ./frontend/public/chara/level14.jpg
-    │   │   ├── ./frontend/public/chara/level15.jpg
-    │   │   ├── ./frontend/public/chara/level16.jpg
-    │   │   ├── ./frontend/public/chara/level17.jpg
-    │   │   ├── ./frontend/public/chara/level18.jpg
-    │   │   ├── ./frontend/public/chara/level19.jpg
-    │   │   ├── ./frontend/public/chara/level2.jpg
-    │   │   ├── ./frontend/public/chara/level20.jpg
-    │   │   ├── ./frontend/public/chara/level3.jpg
-    │   │   ├── ./frontend/public/chara/level4.jpg
-    │   │   ├── ./frontend/public/chara/level5.jpg
-    │   │   ├── ./frontend/public/chara/level6.jpg
-    │   │   ├── ./frontend/public/chara/level7.jpg
-    │   │   ├── ./frontend/public/chara/level8.jpg
-    │   │   └── ./frontend/public/chara/level9.jpg
     │   ├── ./frontend/public/file.svg
     │   ├── ./frontend/public/globe.svg
+    │   ├── ./frontend/public/images
+    │   │   └── ./frontend/public/images/char
+    │   │       ├── ./frontend/public/images/char/level1.jpg
+    │   │       ├── ./frontend/public/images/char/level10.jpg
+    │   │       ├── ./frontend/public/images/char/level11.jpg
+    │   │       ├── ./frontend/public/images/char/level12.jpg
+    │   │       ├── ./frontend/public/images/char/level13.jpg
+    │   │       ├── ./frontend/public/images/char/level14.jpg
+    │   │       ├── ./frontend/public/images/char/level15.jpg
+    │   │       ├── ./frontend/public/images/char/level16.jpg
+    │   │       ├── ./frontend/public/images/char/level17.jpg
+    │   │       ├── ./frontend/public/images/char/level18.jpg
+    │   │       ├── ./frontend/public/images/char/level19.jpg
+    │   │       ├── ./frontend/public/images/char/level2.jpg
+    │   │       ├── ./frontend/public/images/char/level20.jpg
+    │   │       ├── ./frontend/public/images/char/level3.jpg
+    │   │       ├── ./frontend/public/images/char/level4.jpg
+    │   │       ├── ./frontend/public/images/char/level5.jpg
+    │   │       ├── ./frontend/public/images/char/level6.jpg
+    │   │       ├── ./frontend/public/images/char/level7.jpg
+    │   │       ├── ./frontend/public/images/char/level8.jpg
+    │   │       └── ./frontend/public/images/char/level9.jpg
     │   ├── ./frontend/public/next.svg
     │   ├── ./frontend/public/vercel.svg
     │   └── ./frontend/public/window.svg
     ├── ./frontend/tsconfig.json
+    ├── ./frontend/tsconfig.tsbuildinfo
     └── ./frontend/types
-        └── ./frontend/types/type.ts
+        └── ./frontend/types/api.ts
 
-26 directories, 82 files
+28 directories, 95 files
