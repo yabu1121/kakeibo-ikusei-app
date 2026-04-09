@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 const BASE_URL = process.env.BACKEND_URL || 'http://localhost:8080'
 
 export async function login(formData: FormData) {
-  const res = await fetch(`${BASE_URL}/user/login`, {
+  const res = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -24,9 +24,11 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const res = await fetch(`${BASE_URL}/user/signup`, {
+  const res = await fetch(`${BASE_URL}/signup`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json' 
+    },
     body: JSON.stringify({
       name: formData.get('name'),
       email: formData.get('email'),

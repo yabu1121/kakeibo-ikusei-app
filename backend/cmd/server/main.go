@@ -47,8 +47,8 @@ func main() {
 	userHandler := handler.NewUserHandler(userUsecase)
 
 	e := echo.New()
-	e.POST("/user/login", userHandler.Login)
-	e.POST("/user/signup", userHandler.SignUp)
+	e.POST("/login", userHandler.Login)
+	e.POST("/signup", userHandler.SignUp)
 
 
 	secretKey := os.Getenv("JWT_SECRET_KEY")
