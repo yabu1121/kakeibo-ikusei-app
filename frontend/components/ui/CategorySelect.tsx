@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Category } from "@/types/type"
+import { CategoryResponse as Category } from "@/types/api"
 
 type Props = {
   categories: Category[]

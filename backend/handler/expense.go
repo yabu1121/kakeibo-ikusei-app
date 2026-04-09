@@ -26,6 +26,26 @@ type ExpenseRequest struct {
 	OccuredAt  time.Time `json:"occured_at"`
 }
 
+type ExpenseResponse struct {
+	ID         string    `json:"id"`
+	Name       string    `json:"name"`
+	Amount     int       `json:"amount"`
+	OccuredAt  time.Time `json:"occured_at"`
+	CategoryID string    `json:"category_id"`
+	UserID     string    `json:"user_id"`
+}
+
+func toExpenseResponse(e *model.Expense) ExpenseResponse {
+	return ExpenseResponse{
+		ID:         e.ID,
+		Name:       e.Name,
+		Amount:     e.Amount,
+		OccuredAt:  e.OccuredAt,
+		CategoryID: e.CategoryID,
+		UserID:     e.UserID,
+	}
+}
+
 func (h *ExpenseHandler) RecordExpense(c echo.Context) error {
 	var req ExpenseRequest
 	if err := c.Bind(&req); err != nil {
@@ -53,7 +73,14 @@ func (h *ExpenseHandler) RecordExpense(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "internal server error"})
 	}
-	return c.JSON(http.StatusOK, char)
+	return c.JSON(http.StatusOK, CharacterResponse{
+		ID:             char.ID,
+		UserID:         char.UserID,
+		CurrentLevel:   char.CurrentLevel,
+		CurrentExp:     char.CurrentExp,
+		ExpToNextLevel: char.ExpToNextLevel,
+		ImageURL:       model.GetImageByLevel(char.CurrentLevel),
+	})
 }
 
 func (h *ExpenseHandler) GetAllExpense(c echo.Context) error {
@@ -61,7 +88,11 @@ func (h *ExpenseHandler) GetAllExpense(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to get expenses"})
 	}
-	return c.JSON(http.StatusOK, expenses)
+	res := make([]ExpenseResponse, len(expenses))
+	for i, e := range expenses {
+		res[i] = toExpenseResponse(&e)
+	}
+	return c.JSON(http.StatusOK, res)
 }
 
 func (h *ExpenseHandler) DeleteByID (c echo.Context) error {
@@ -80,11 +111,11 @@ func (h *ExpenseHandler) GetByID (c echo.Context) error {
 	if id == "" {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
 	}
-	res, err := h.usecase.GetByID(id); 
+	res, err := h.usecase.GetByID(id)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "failed to get expense by this id"})
 	}
-	return c.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusOK, toExpenseResponse(res))
 }
 
 func (h *ExpenseHandler) Update (c echo.Context) error {
@@ -115,5 +146,5 @@ func (h *ExpenseHandler) Update (c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to update expense"})
 	}
-	return c.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusOK, toExpenseResponse(res))
 }
