@@ -1,11 +1,11 @@
 import { logout } from '@/app/actions/auth'
 import { Title } from '@/components/ui/Title'
-import { getCharacter } from '@/lib/server/api'
 import Image from 'next/image'
 import Link from 'next/link'
+import { GetCharacterInformation } from '../actions/character'
 
 export default async function TopPage() {
-  const character = await getCharacter()
+  const character = await GetCharacterInformation()
   const frontURL = process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000"
   return (
     <main className="flex-1 flex items-center justify-center py-8">

@@ -1,7 +1,7 @@
 import { CategoryResponse, CreateCategoryRequest } from "@/types/api";
 import { BASE_URL, getToken } from "./util";
 
-export async function GETAllCategory(): Promise<CategoryResponse[] | undefined> {
+export async function GETAllCategory(): Promise<CategoryResponse[]> {
   const token = await getToken()
 
   const res = await fetch(`${BASE_URL}/user/category`, {
@@ -11,11 +11,14 @@ export async function GETAllCategory(): Promise<CategoryResponse[] | undefined> 
       Authorization: `Bearer ${token}`,
     }
   })
-  if (!res.ok) return
+  if (!res.ok) {
+    console.error("取得失敗");
+    return [];
+  }
   return await res.json()
 }
 
-export async function CreateCategory(formData: FormData): Promise<CategoryResponse | undefined> {
+export async function CreateCategory(formData: FormData): Promise<CategoryResponse> {
   const token = await getToken()
 
   const body: CreateCategoryRequest = {
@@ -30,6 +33,9 @@ export async function CreateCategory(formData: FormData): Promise<CategoryRespon
     },
     body: JSON.stringify(body),
   })
-  if (!res.ok) return
+  if (!res.ok) {
+    const errorMsg = await res.text()
+    throw new Error(`カテゴリー作成失敗: ${errorMsg}`)
+  }
   return await res.json()
 }
