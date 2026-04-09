@@ -1,9 +1,7 @@
-	// user.GET("/category", categoryHandler.GetAll)
-	// user.POST("/category", categoryHandler.Create)
-
+import { CategoryResponse, CreateCategoryRequest } from "@/types/api";
 import { BASE_URL, getToken } from "./util";
 
-export async function GETAllCategory () {
+export async function GETAllCategory(): Promise<CategoryResponse[] | undefined> {
   const token = await getToken()
 
   const res = await fetch(`${BASE_URL}/user/category`, {
@@ -17,8 +15,12 @@ export async function GETAllCategory () {
   return await res.json()
 }
 
-export async function CreateCategory (formData: FormData) {
+export async function CreateCategory(formData: FormData): Promise<CategoryResponse | undefined> {
   const token = await getToken()
+
+  const body: CreateCategoryRequest = {
+    name: formData.get('name') as string,
+  }
 
   const res = await fetch(`${BASE_URL}/user/category`, {
     method: 'POST',
@@ -26,9 +28,7 @@ export async function CreateCategory (formData: FormData) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      name: formData.get('name'),
-    })
+    body: JSON.stringify(body),
   })
   if (!res.ok) return
   return await res.json()

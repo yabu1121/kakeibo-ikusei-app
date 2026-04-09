@@ -54,3 +54,10 @@ export type CategoryResponse = {
   id: string
   name: string
 }
+
+
+// slack
+
+export type SlackRequest = {
+  message: string
+}

@@ -1,6 +1,7 @@
+import { CharacterResponse } from "@/types/api";
 import { BASE_URL, getToken } from "./util";
 
-export async function GetCharacterInformation () {
+export async function GetCharacterInformation(): Promise<CharacterResponse | undefined> {
   const token = await getToken()
 
   const res = await fetch(`${BASE_URL}/user/character`, {
@@ -14,7 +15,7 @@ export async function GetCharacterInformation () {
   return await res.json()
 }
 
-export async function LoginBonus () {
+export async function LoginBonus(): Promise<CharacterResponse | undefined> {
   const token = await getToken()
 
   const res = await fetch(`${BASE_URL}/user/character/login`, {
@@ -24,6 +25,6 @@ export async function LoginBonus () {
       Authorization: `Bearer ${token}`
     }
   })
-  if (!res.ok) return 
+  if (!res.ok) return
   return await res.json()
 }
