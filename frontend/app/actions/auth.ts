@@ -2,8 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-
-const BASE_URL = process.env.BACKEND_URL || 'http://localhost:8080'
+import { BASE_URL } from './util'
 
 export async function login(formData: FormData) {
   const res = await fetch(`${BASE_URL}/login`, {

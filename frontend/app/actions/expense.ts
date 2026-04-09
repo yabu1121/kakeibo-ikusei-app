@@ -1,16 +1,8 @@
 'use server'
 
-// rud
-
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { BASE_URL, getToken } from './util'
 
-const BASE_URL = process.env.BACKEND_URL || 'http://localhost:8080'
-
-async function getToken() {
-  const cookieStore = await cookies()
-  return cookieStore.get('token')?.value
-}
 
 export async function recordExpense(formData: FormData) {
   const token = await getToken()
